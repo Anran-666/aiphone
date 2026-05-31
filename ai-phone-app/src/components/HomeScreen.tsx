@@ -7,6 +7,9 @@ interface HomeScreenProps {
   onOpenMap: () => void;
   onOpenCalendar: () => void;
   onOpenSettings: () => void;
+  onOpenCamera: () => void;
+  onOpenWeather: () => void;
+  onOpenMusic: () => void;
 }
 
 const apps = [
@@ -18,7 +21,7 @@ const apps = [
   { id: 'settings', name: '设置', icon: '⚙️', color: '#64748b' },
 ];
 
-export const HomeScreen: React.FC<HomeScreenProps> = ({ onOpenAIAssistant, onOpenMap, onOpenCalendar, onOpenSettings }) => {
+export const HomeScreen: React.FC<HomeScreenProps> = ({ onOpenAIAssistant, onOpenMap, onOpenCalendar, onOpenSettings, onOpenCamera, onOpenWeather, onOpenMusic }) => {
   const [gestureHint, setGestureHint] = useState<string | null>(null);
 
   const handleAppClick = (appId: string) => {
@@ -28,6 +31,12 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onOpenAIAssistant, onOpe
       onOpenMap();
     } else if (appId === 'calendar') {
       onOpenCalendar();
+    } else if (appId === 'camera') {
+      onOpenCamera();
+    } else if (appId === 'weather') {
+      onOpenWeather();
+    } else if (appId === 'music') {
+      onOpenMusic();
     } else {
       setGestureHint(`打开 ${appId}`);
       setTimeout(() => setGestureHint(null), 1500);

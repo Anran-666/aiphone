@@ -18,9 +18,9 @@ interface AIResponse {
 
 export class AIService {
   private config: AIConfig = {
-    apiKey: 'sk-5575ff5443b442ec9c368288547df318', // DeepSeek API Key
-    baseUrl: 'https://api.deepseek.com/v1', // DeepSeek API地址
-    model: 'deepseek-chat' // DeepSeek模型
+    apiKey: import.meta.env.VITE_DEEPSEEK_API_KEY || '',
+    baseUrl: 'https://api.deepseek.com/v1',
+    model: 'deepseek-chat'
   };
 
   private systemPrompt = `你是智联（ZhiLian），AI Phone的智能助手。

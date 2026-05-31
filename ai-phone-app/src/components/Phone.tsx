@@ -8,6 +8,9 @@ import { AIAssistant } from './AIAssistant';
 import { MapScreen } from './MapScreen';
 import { CalendarScreen } from './CalendarScreen';
 import { SettingsScreen } from './SettingsScreen';
+import { CameraScreen } from './CameraScreen';
+import { WeatherScreen } from './WeatherScreen';
+import { MusicScreen } from './MusicScreen';
 
 interface PhoneProps {
   initialMode?: PhoneMode;
@@ -16,7 +19,7 @@ interface PhoneProps {
 export const Phone: React.FC<PhoneProps> = ({ initialMode = 'folded' }) => {
   const [mode, setMode] = useState<PhoneMode>(initialMode);
   const [isWakeUp, setIsWakeUp] = useState(false);
-  const [currentScreen, setCurrentScreen] = useState<'home' | 'ai-assistant' | 'map' | 'calendar' | 'camera' | 'settings'>('home');
+  const [currentScreen, setCurrentScreen] = useState<'home' | 'ai-assistant' | 'map' | 'calendar' | 'camera' | 'weather' | 'music' | 'settings'>('home');
 
   const bind = useDrag(
     ({ movement: [mx, my], down, cancel }) => {
@@ -78,6 +81,30 @@ export const Phone: React.FC<PhoneProps> = ({ initialMode = 'folded' }) => {
     setCurrentScreen('home');
   };
 
+  const handleOpenCamera = () => {
+    setCurrentScreen('camera');
+  };
+
+  const handleCloseCamera = () => {
+    setCurrentScreen('home');
+  };
+
+  const handleOpenWeather = () => {
+    setCurrentScreen('weather');
+  };
+
+  const handleCloseWeather = () => {
+    setCurrentScreen('home');
+  };
+
+  const handleOpenMusic = () => {
+    setCurrentScreen('music');
+  };
+
+  const handleCloseMusic = () => {
+    setCurrentScreen('home');
+  };
+
   const handleGestureAction = (action: string) => {
     if (action === 'open_map') {
       handleOpenMap();
@@ -134,6 +161,9 @@ export const Phone: React.FC<PhoneProps> = ({ initialMode = 'folded' }) => {
                       onOpenMap={handleOpenMap}
                       onOpenCalendar={handleOpenCalendar}
                       onOpenSettings={handleOpenSettings}
+                      onOpenCamera={handleOpenCamera}
+                      onOpenWeather={handleOpenWeather}
+                      onOpenMusic={handleOpenMusic}
                     />
                   </motion.div>
                 )}
@@ -191,6 +221,48 @@ export const Phone: React.FC<PhoneProps> = ({ initialMode = 'folded' }) => {
                     className="screen-content"
                   >
                     <SettingsScreen onClose={handleCloseSettings} />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              <AnimatePresence mode="wait">
+                {currentScreen === 'camera' && (
+                  <motion.div
+                    key="camera"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="screen-content"
+                  >
+                    <CameraScreen onClose={handleCloseCamera} />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              <AnimatePresence mode="wait">
+                {currentScreen === 'weather' && (
+                  <motion.div
+                    key="weather"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="screen-content"
+                  >
+                    <WeatherScreen onClose={handleCloseWeather} />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              <AnimatePresence mode="wait">
+                {currentScreen === 'music' && (
+                  <motion.div
+                    key="music"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="screen-content"
+                  >
+                    <MusicScreen onClose={handleCloseMusic} />
                   </motion.div>
                 )}
               </AnimatePresence>
